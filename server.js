@@ -7,14 +7,13 @@ const signin = require('./controllers/signin');
 const profile = require('./controllers/profile')
 const image = require('./controllers/image')
 
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
-      port : 5432,
-      user : 'angelivanov',
-      password : '',
-      database : 'smart-brain'
+      connectionString : process.env.DATABASE_URL,
+      ssl : true,
     }
   }); 
 
@@ -36,3 +35,4 @@ app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
 app.listen(process.env.PORT || 8000, () => {
     console.log(`app is running on port ${process.env.PORT}`)
 });
+ 
